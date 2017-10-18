@@ -74,25 +74,25 @@ class Robot2dRectangular(Robot2dBase):
     Base class for rectangular shaped robots.
     """
     def __init__(self, size=(0.3, 0.5)):
-        self.w, self.h = size
+        self.w, self.l = size
         super(Robot2dRectangular, self).__init__()
 
     def visualize(self, ax):
         # calculate position of the lower-left corner
-        x0 = self.x - 0.5 * self.h * np.cos(self.th) - 0.5 * self.w * np.sin(self.th)
-        y0 = self.y - 0.5 * self.h * np.sin(self.th) + 0.5 * self.w * np.cos(self.th)
+        x0 = self.x - 0.5 * self.l * np.cos(self.th) - 0.5 * self.w * np.sin(self.th)
+        y0 = self.y - 0.5 * self.l * np.sin(self.th) + 0.5 * self.w * np.cos(self.th)
 
         if self.vis is None:
             # create new plot
             vis_body = ax.add_patch(
                 patches.Rectangle(
-                    (x0, y0), self.w, self.h, self.th,
+                    (x0, y0), self.w, self.l, np.rad2deg(self.th - 0.5 * np.pi),
                     facecolor="red", alpha=0.5
                 )
             )
             # draw the orientation
-            x_plot = np.array([self.x, self.x + 0.5 * self.h * np.cos(self.th)])
-            y_plot = np.array([self.y, self.y + 0.5 * self.h * np.sin(self.th)])
+            x_plot = np.array([self.x, self.x + 0.5 * self.l * np.cos(self.th)])
+            y_plot = np.array([self.y, self.y + 0.5 * self.l * np.sin(self.th)])
             vis_rot = ax.plot(x_plot, y_plot, lw=2, ls='-')
 
             self.vis = (vis_body, vis_rot)
@@ -101,9 +101,9 @@ class Robot2dRectangular(Robot2dBase):
             vis_body, vis_rot = self.vis
 
             vis_body.set_xy((x0, y0))
-            vis_body._angle = np.rad2deg(self.th)
+            vis_body._angle = np.rad2deg(self.th - 0.5 * np.pi)
 
-            x_plot = np.array([self.x, self.x + 0.5 * self.h * np.cos(self.th)])
-            y_plot = np.array([self.y, self.y + 0.5 * self.h * np.sin(self.th)])
+            x_plot = np.array([self.x, self.x + 0.5 * self.l * np.cos(self.th)])
+            y_plot = np.array([self.y, self.y + 0.5 * self.l * np.sin(self.th)])
             vis_rot[0].set_xdata(x_plot)
             vis_rot[0].set_ydata(y_plot)

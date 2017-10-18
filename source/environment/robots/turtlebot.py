@@ -1,21 +1,5 @@
-import numpy as np
 from source.environment.robots.robot2d_base import Robot2dCircular
-
-# dynamic simulation tolerance
-TOL_DYN = 1e-3
-
-
-def set_cmd_vel(vel_curr, vel_cmd, max_vel, max_acc, dt):
-    """
-    Set robot velocity with velocity and acceleration constraint
-    """
-    if np.abs(vel_cmd - vel_curr) < max_acc * dt:
-        vel_next = vel_cmd
-    else:
-        vel_next = vel_curr + np.sign(vel_cmd - vel_curr) * max_acc * dt
-
-    vel_next = np.clip(vel_next, -max_vel, max_vel)
-    return vel_next
+from source.environment.robots.robot_utils import *
 
 
 class Turtlebot(Robot2dCircular):
@@ -25,8 +9,9 @@ class Turtlebot(Robot2dCircular):
     def __init__(self, size=0.3, max_vel=(0.5, 2.0), max_acc=(2.0, 5.0), uncertainty=(0.0, 0.0)):
         """
         :param size: size/radius of the robot
+        :param max_vel: maximum linear and angular velocity
         :param max_acc: maximum linear and angular acceleration
-        :param uncertainty: linear and angular velocity
+        :param uncertainty: linear and angular velocity uncertainty
         """
         self.max_v, self.max_om = max_vel
         self.max_v_acc, self.max_om_acc = max_acc
@@ -39,7 +24,7 @@ class Turtlebot(Robot2dCircular):
 
     def update(self, u, dt):
         """
-        Dynamic update. Control inputs are commanded linear and angular velocity.
+        Dynamic/kinematic update. Control inputs are commanded linear and angular velocity.
         :param u: commanded linear and angular velocities (v, om)
         :param dt: time step
         """
