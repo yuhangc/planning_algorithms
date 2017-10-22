@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.patches as patches
 
 
-class Robot2dBase:
+class Robot2dBase(object):
     """
     A base class for simple 2d robot.
     """
