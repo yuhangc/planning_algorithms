@@ -40,6 +40,7 @@ class Robot2dCircular(Robot2dBase):
     Base class for circular shaped robots.
     """
     def __init__(self, size=0.3):
+        self.type = "Circular2D"
         self.radius = size
         super(Robot2dCircular, self).__init__()
 
@@ -74,6 +75,7 @@ class Robot2dRectangular(Robot2dBase):
     Base class for rectangular shaped robots.
     """
     def __init__(self, size=(0.3, 0.5)):
+        self.type = "Rectangular2D"
         self.w, self.l = size
         super(Robot2dRectangular, self).__init__()
 
