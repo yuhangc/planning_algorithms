@@ -6,6 +6,7 @@ from source.environment.robots.turtlebot import Turtlebot
 from source.environment.robots.car import BicycleCar
 from source.algorithms.sampling_based.utils.state_samplers import StateSamplerUniform
 from source.algorithms.sampling_based.utils.collision_checkers import CollisionCheckerGrid
+from source.algorithms.sampling_based.utils.steer_functions import SteerFunctionPOSQ
 
 
 def test_collision_checker_car():
@@ -88,7 +89,35 @@ def test_sampler_collision_checker(robot_type):
     plt.show()
 
 
+def test_steer_function():
+    # create a plot axis
+    fig, ax = plt.subplots()
+    ax.set_aspect("equal")
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-3, 3)
+
+    # create a steering function
+    sfunc = SteerFunctionPOSQ()
+
+    # set a bunch of test goals
+    xe_list = np.array([[3.0, 0.0, 0.0],
+                   [2.5, 2.5, 0.0],
+                   [0.0, 3.0, 0.5 * np.pi],
+                   [2.5, -2.5, -0.5 * np.pi],
+                   [-2.5, 2.5, -np.pi]])
+
+    # test for reaching goal within gamma
+    for xe in xe_list:
+        traj = sfunc.steer(np.array([0.0, 0.0, 0.0]), xe)
+
+        # plot trajectory
+        ax.plot(traj[:, 0], traj[:, 1], '-o', markersize=3, fillstyle='none')
+
+    plt.show()
+
+
 if __name__ == "__main__":
-    test_sampler_collision_checker("Turtlebot")
-    test_sampler_collision_checker("Car")
+    # test_sampler_collision_checker("Turtlebot")
+    # test_sampler_collision_checker("Car")
     # test_collision_checker_car()
+    test_steer_function()

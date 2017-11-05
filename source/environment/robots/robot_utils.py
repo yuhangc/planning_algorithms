@@ -1,8 +1,5 @@
 import numpy as np
 
-# dynamic simulation tolerance
-TOL_DYN = 1e-3
-
 
 def set_cmd_vel(vel_curr, vel_cmd, max_vel, max_acc, dt):
     """

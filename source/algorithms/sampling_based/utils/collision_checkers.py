@@ -1,7 +1,5 @@
-import numpy as np
-
 from source.environment.worlds.occupancy_grid import OccupancyGrid
-from source.algorithms.sampling_based.utils.utils import *
+from source.common_utils.math import *
 
 
 class CollisionCheckerBase(object):

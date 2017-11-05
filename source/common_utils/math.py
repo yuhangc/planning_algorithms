@@ -15,3 +15,13 @@ def transform_point_to_world(point, state):
     y_new = x * np.sin(th) + y * np.cos(th) + y0
 
     return x_new, y_new
+
+
+# wrap an angle to [-pi, pi)
+def wrap_to_pi(ang):
+    while ang < -np.pi:
+        ang += 2.0 * np.pi
+    while ang >= np.pi:
+        ang -= 2.0 * np.pi
+
+    return ang

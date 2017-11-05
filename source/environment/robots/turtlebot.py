@@ -1,5 +1,6 @@
 from source.environment.robots.robot2d_base import Robot2dCircular
 from source.environment.robots.robot_utils import *
+from source.common_utils.constants import *
 
 
 class Turtlebot(Robot2dCircular):
@@ -45,7 +46,7 @@ class Turtlebot(Robot2dCircular):
         # update position
         th_new = self.th + om_next * dt
 
-        if om_next > TOL_DYN:
+        if om_next > TOL_DYN_SIM:
             self.x += v_next / om_next * (np.sin(th_new) - np.sin(self.th))
             self.y -= v_next / om_next * (np.cos(th_new) - np.cos(self.th))
         else:

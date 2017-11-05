@@ -1,5 +1,6 @@
 from source.environment.robots.robot2d_base import Robot2dRectangular
 from source.environment.robots.robot_utils import *
+from source.common_utils.constants import *
 
 
 class BicycleCar(Robot2dRectangular):
@@ -42,7 +43,7 @@ class BicycleCar(Robot2dRectangular):
         v_next = np.clip(v_next, -self.max_v, self.max_v)
 
         # update position
-        if np.abs(u[1]) > TOL_DYN:
+        if np.abs(u[1]) > TOL_DYN_SIM:
             beta = np.arctan(0.5 * np.tan(u[1]))
             R = 0.5 * self.l / np.sin(beta)
 
