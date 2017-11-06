@@ -22,8 +22,8 @@ def test_collision_checker_car():
     # visualize map
     grid_map.visualize(ax)
 
-    # robot = BicycleCar(size=(0.2, 0.4))
-    robot = Turtlebot(size=0.15)
+    robot = BicycleCar(size=(0.2, 0.4))
+    # robot = Turtlebot(size=0.15)
 
     # create a collision checker
     checker = CollisionCheckerGrid(grid_map, robot)
@@ -116,8 +116,49 @@ def test_steer_function():
     plt.show()
 
 
+def test_collision_check_traj():
+    # create an occupancy grid
+    grid_map = OccupancyGrid("../../../resources/occ_maps/test_map.png", 0.01)
+
+    # create a plot axis
+    fig, ax = plt.subplots()
+    ax.set_aspect("equal")
+    ax.set_xlim(0, 7.5)
+    ax.set_ylim(0, 6)
+
+    # visualize map
+    grid_map.visualize(ax)
+
+    # robot = BicycleCar(size=(0.2, 0.4))
+    robot = Turtlebot(size=0.15)
+
+    # create a collision checker
+    checker = CollisionCheckerGrid(grid_map, robot)
+
+    # create a steering function
+    sfunc = SteerFunctionPOSQ()
+
+    # starting and ending position
+    xs = np.array([2.0, 2.0, 0.0])
+    xe = np.array([4.0, 1.5, 0.0])
+
+    robot.set_pose(xs)
+    robot.visualize(ax)
+
+    # obtain trajectory
+    traj = sfunc.steer(xs, xe)
+    ax.plot(traj[:, 0], traj[:, 1], '-o', markersize=3, fillstyle='none')
+
+    # check for collision
+    valid = checker.check_traj(traj)
+    print "Trajectory has collision: ", not valid
+
+    plt.show()
+
+
 if __name__ == "__main__":
     # test_sampler_collision_checker("Turtlebot")
     # test_sampler_collision_checker("Car")
     # test_collision_checker_car()
-    test_steer_function()
+    # test_steer_function()
+    test_collision_check_traj()

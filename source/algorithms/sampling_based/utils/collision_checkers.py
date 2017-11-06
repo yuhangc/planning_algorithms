@@ -30,6 +30,41 @@ class CollisionCheckerGrid(CollisionCheckerBase):
         elif self.robot.type == "Rectangular2D":
             self.check_points = self.init_check_points_rectangular(self.robot.w, self.robot.l)
 
+        # boundary points
+        self.boundary = self.find_boundary_points(self.check_points)
+
+    @staticmethod
+    def find_boundary_points(check_points):
+        boundary = []
+
+        # loop through all points
+        N = len(check_points)
+        for i in range(N):
+            # initialize quadrant counter
+            qcount = np.zeros((4, 1), dtype=int)
+            pi = check_points[i]
+
+            # check all other points
+            for j in range(N):
+                if i == j:
+                    continue
+
+                pj = check_points[j]
+                if pj[0] > pi[0] and pj[1] >= pi[1]:
+                    qcount[0] += 1
+                if pj[0] <= pi[0] and pj[1] > pi[1]:
+                    qcount[1] += 1
+                if pj[0] < pi[0] and pj[1] <= pi[1]:
+                    qcount[2] += 1
+                if pj[0] >= pi[0] and pj[1] < pi[1]:
+                    qcount[3] += 1
+
+            # check quadrant counts
+            if any(qcount == 0):
+                boundary.append(pi)
+
+        return boundary
+
     def init_check_points_circular(self, radius):
         """
         Create a set of check points in the robot's coordinate frame.
@@ -66,8 +101,8 @@ class CollisionCheckerGrid(CollisionCheckerBase):
 
         return check_points
 
-    def check_circular(self, state):
-        for point in self.check_points:
+    def check_circular(self, state, check_points):
+        for point in check_points:
             # if ax is not None:
             #     ax.scatter(point[0] + state[0], point[1] + state[1], color="red")
             if not self.ss_map.is_free(point[0] + state[0], point[1] + state[1]):
@@ -75,8 +110,8 @@ class CollisionCheckerGrid(CollisionCheckerBase):
 
         return True
 
-    def check_rectangular(self, state):
-        for point in self.check_points:
+    def check_rectangular(self, state, check_points):
+        for point in check_points:
             # first transform the check points in world coordinate
             x, y = transform_point_to_world(point, state)
             # if ax is not None:
@@ -87,7 +122,26 @@ class CollisionCheckerGrid(CollisionCheckerBase):
         return True
 
     def check(self, state, ax=None):
+        """
+        :return: True if collision free, False otherwise
+        """
         if self.robot.type == "Circular2D":
-            return self.check_circular(state)
+            return self.check_circular(state, self.check_points)
         elif self.robot.type == "Rectangular2D":
-            return self.check_rectangular(state)
+            return self.check_rectangular(state, self.check_points)
+
+    def check_traj(self, traj):
+        """
+        :return: True if collision free, False otherwise
+        """
+        for state in traj:
+            flag = False
+            if self.robot.type == "Circular2D":
+                flag = self.check_circular(state, self.boundary)
+            elif self.robot.type == "Rectangular2D":
+                flag = self.check_rectangular(state, self.boundary)
+
+            if not flag:
+                return False
+
+        return True
