@@ -24,18 +24,19 @@ class StateSamplerBase(object):
     def sample(self):
         """
         Sample with goal biasing (if enabled)
-        :return: randomly sampled state
+        :return: randomly sampled state, and a flag indicating if returned state
+        is goal state.
         """
         if self.goal_bias is None:
-            return self.sample_without_bias()
+            return self.sample_without_bias(), False
 
         # obtain a random value from 0~1
         p = np.random.uniform()
 
         if p < self.goal_bias:
-            return self.goal_state
+            return self.goal_state, True
         else:
-            return self.sample_without_bias()
+            return self.sample_without_bias(), False
 
 
 class StateSamplerUniform(StateSamplerBase):
@@ -59,4 +60,4 @@ class StateSamplerUniform(StateSamplerBase):
         for i in range(0, self.dim):
             state[i] = np.random.uniform(self.lb[i], self.ub[i])
 
-        return state
+        return state.reshape(self.dim)

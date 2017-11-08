@@ -70,7 +70,7 @@ def test_sampler_collision_checker(robot_type):
 
     # randomly sample 10 states and check collision
     for k in range(20):
-        sample_state = sampler.sample()
+        sample_state, flag = sampler.sample()
         valid = checker.check(sample_state)
 
         # draw the robot

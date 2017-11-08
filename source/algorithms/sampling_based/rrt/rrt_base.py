@@ -8,14 +8,20 @@ class RRTBase(object):
         self.nn = nn
         self.sfunc = sfunc
 
-    def set_goal(self, goal_state, goal_tol):
-        pass
+        self.goal_state = None
+        self.goal_tol = None
+        self.init_state = None
+        self.planned_path = None
+
+    def set_goal(self, goal_state, goal_tol=np.array([0.1, 0.1])):
+        self.goal_state = goal_state
+        self.goal_tol = goal_tol
 
     def set_init(self, init_state):
-        pass
+        self.init_state = init_state
 
     def solve(self, max_iter=2000):
-        pass
+        raise Exception("Method must be implemented by derived classes!")
 
     def get_path(self):
-        pass
+        return self.planned_path

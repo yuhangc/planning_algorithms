@@ -9,9 +9,10 @@ class SteerFunctionNaive(object):
     def steer(self, xs, xe, epsilon=None, flag_ending=False, tol_ending=None):
         # calculate position increment
         dx = xe[:2] - xs[:2]
-        dx /= np.linalg.norm(dx) * self.ds
+        dx = dx / np.linalg.norm(dx) * self.ds
 
         traj = []
+        traj.append(xs)
         s = 0.0
         x, y = xs[:2]
 
@@ -25,10 +26,10 @@ class SteerFunctionNaive(object):
             s += self.ds
 
             # append to trajectory
-            traj.append(np.array([x, y]))
+            traj.append(np.array([x, y, 0.0]))
 
             # check if goal is reached
-            if flag_ending and np.linalg.norm(xe[:2] - np.array([x, y])) < tol_ending:
+            if flag_ending and np.linalg.norm(xe[:2] - np.array([x, y])) < tol_ending[0]:
                 break
 
         # return trajectory
@@ -65,6 +66,7 @@ class SteerFunctionPOSQ(object):
         x, y, th = xs
         s = 0.0
         traj = []
+        traj.append(xs)
 
         if epsilon is None:
             epsilon = 1e10
@@ -102,7 +104,10 @@ class SteerFunctionPOSQ(object):
             s += v * self.dt
 
             # append to trajectory
-            traj.append(np.array([x, y, th, v, om]))
+            traj.append(np.array([x, y, th]))
 
         # return the trajectory
-        return np.array(traj)
+        if len(traj) == 1:
+            return np.array([])
+        else:
+            return np.array(traj)
