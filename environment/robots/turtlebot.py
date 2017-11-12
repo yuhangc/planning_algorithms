@@ -1,3 +1,7 @@
+from os import path
+import sys
+sys.path.append(path.abspath("../.."))
+
 from environment.robots.robot2d_base import Robot2dCircular
 from environment.robots.robot_utils import *
 from common_utils.constants import *

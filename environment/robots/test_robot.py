@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import sleep
 
-from environment.robots.turtlebot import Turtlebot
-from environment.robots.car import BicycleCar
-from environment.robots.humans import HumanSimple
+from turtlebot import Turtlebot
+from car import BicycleCar
+from humans import HumanSimple
 
 
 def test_turtlebot_sim():

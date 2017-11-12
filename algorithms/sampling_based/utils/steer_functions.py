@@ -1,3 +1,7 @@
+from os import path
+import sys
+sys.path.append(path.abspath("../../.."))
+
 from common_utils.math import *
 from common_utils.constants import *
 

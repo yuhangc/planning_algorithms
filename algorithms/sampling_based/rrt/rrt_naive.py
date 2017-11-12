@@ -1,3 +1,7 @@
+from os import path
+import sys
+sys.path.append(path.abspath("../../.."))
+
 import numpy as np
 
 from algorithms.sampling_based.rrt.rrt_base import RRTBase

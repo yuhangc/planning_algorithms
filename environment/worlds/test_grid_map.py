@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from environment.worlds.occupancy_grid import OccupancyGrid
+from occupancy_grid import OccupancyGrid
 
 
 def test_map_loading():

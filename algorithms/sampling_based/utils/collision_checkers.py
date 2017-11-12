@@ -1,3 +1,7 @@
+from os import path
+import sys
+sys.path.append(path.abspath("../../.."))
+
 from environment.worlds.occupancy_grid import OccupancyGrid
 from common_utils.math import *
 
