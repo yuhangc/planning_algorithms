@@ -1,5 +1,5 @@
-from source.environment.worlds.occupancy_grid import OccupancyGrid
-from source.common_utils.math import *
+from environment.worlds.occupancy_grid import OccupancyGrid
+from common_utils.math import *
 
 
 class CollisionCheckerBase(object):

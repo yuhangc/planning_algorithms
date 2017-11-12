@@ -2,16 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-from source.algorithms.sampling_based.rrt.rrt_naive import RRTNaive
-from source.algorithms.sampling_based.utils.steer_functions import *
-from source.algorithms.sampling_based.utils.distance_functions import *
-from source.algorithms.sampling_based.utils.collision_checkers import CollisionCheckerGrid
-from source.algorithms.sampling_based.utils.state_samplers import StateSamplerUniform
-from source.algorithms.sampling_based.utils.nearest_neighbor import NNBruteForce
+from algorithms.sampling_based.rrt.rrt_naive import RRTNaive
+from algorithms.sampling_based.utils.steer_functions import *
+from algorithms.sampling_based.utils.distance_functions import *
+from algorithms.sampling_based.utils.collision_checkers import CollisionCheckerGrid
+from algorithms.sampling_based.utils.state_samplers import StateSamplerUniform
+from algorithms.sampling_based.utils.nearest_neighbor import NNBruteForce
 
-from source.environment.worlds.occupancy_grid import OccupancyGrid
-from source.environment.robots.turtlebot import Turtlebot
-from source.environment.robots.car import BicycleCar
+from environment.worlds.occupancy_grid import OccupancyGrid
+from environment.robots.turtlebot import Turtlebot
+from environment.robots.car import BicycleCar
 
 
 def rrt_naive_example(steer_type="diff_drive"):

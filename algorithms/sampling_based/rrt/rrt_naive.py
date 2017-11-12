@@ -1,6 +1,6 @@
 import numpy as np
 
-from source.algorithms.sampling_based.rrt.rrt_base import RRTBase
+from algorithms.sampling_based.rrt.rrt_base import RRTBase
 
 
 class RRTNaive(RRTBase):

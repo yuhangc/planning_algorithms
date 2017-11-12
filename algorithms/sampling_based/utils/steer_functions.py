@@ -1,5 +1,5 @@
-from source.common_utils.math import *
-from source.common_utils.constants import *
+from common_utils.math import *
+from common_utils.constants import *
 
 
 class SteerFunctionNaive(object):

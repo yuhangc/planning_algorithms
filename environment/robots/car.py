@@ -1,6 +1,6 @@
-from source.environment.robots.robot2d_base import Robot2dRectangular
-from source.environment.robots.robot_utils import *
-from source.common_utils.constants import *
+from environment.robots.robot2d_base import Robot2dRectangular
+from environment.robots.robot_utils import *
+from common_utils.constants import *
 
 
 class BicycleCar(Robot2dRectangular):

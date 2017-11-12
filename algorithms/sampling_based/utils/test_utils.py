@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from source.environment.worlds.occupancy_grid import OccupancyGrid
-from source.environment.robots.turtlebot import Turtlebot
-from source.environment.robots.car import BicycleCar
-from source.algorithms.sampling_based.utils.state_samplers import StateSamplerUniform
-from source.algorithms.sampling_based.utils.collision_checkers import CollisionCheckerGrid
-from source.algorithms.sampling_based.utils.steer_functions import SteerFunctionPOSQ
+from environment.worlds.occupancy_grid import OccupancyGrid
+from environment.robots.turtlebot import Turtlebot
+from environment.robots.car import BicycleCar
+from algorithms.sampling_based.utils.state_samplers import StateSamplerUniform
+from algorithms.sampling_based.utils.collision_checkers import CollisionCheckerGrid
+from algorithms.sampling_based.utils.steer_functions import SteerFunctionPOSQ
 
 
 def test_collision_checker_car():
