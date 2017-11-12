@@ -4,6 +4,7 @@ from time import sleep
 
 from source.environment.robots.turtlebot import Turtlebot
 from source.environment.robots.car import BicycleCar
+from source.environment.robots.humans import HumanSimple
 
 
 def test_turtlebot_sim():
@@ -88,6 +89,52 @@ def test_car_sim():
         t_curr += dt
 
 
+def test_human():
+    human = HumanSimple()
+    human.set_goal(np.array([0, 6]), 0.8, 10.0)
+
+    # create a plot axis
+    fig, ax = plt.subplots()
+    ax.set_aspect('equal')
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-1, 8)
+    plt.ion()
+
+    # plot the goal
+    ax.plot(0.0, 6.0, 'xr')
+
+    # motion list
+    forces = np.array([[0.0, 0.0, 0.0],
+                       [1.0, 5, 0.0],
+                       [2.0, 0.0, 0.0],
+                       [3.0, -5, 0.0],
+                       [4.5, 0.0, 0.0]])
+
+    # simulation at 100hz
+    t_curr = 0.0
+    dt = 0.01
+    f_idx = 0
+    u = np.array([0.0, 0.0])
+    for k in range(1000):
+        # update cmd_vel
+        if f_idx < len(forces) and t_curr >= forces[f_idx, 0]:
+            u = forces[f_idx, 1:]
+            f_idx += 1
+
+        # update robot state
+        human.update(u, dt)
+        sleep(dt * 0.2)
+
+        # plot at lower frequency
+        if k % 5 == 0:
+            human.visualize(ax)
+            plt.pause(0.001)
+
+        # update simulation time
+        t_curr += dt
+
+
 if __name__ == "__main__":
     # test_turtlebot_sim()
-    test_car_sim()
+    # test_car_sim()
+    test_human()
